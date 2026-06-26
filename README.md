@@ -52,12 +52,4 @@ streams live stock quotes and trades.
 lists the python packages needed to run the app.
 
 `.env`
-stores alpaca api keys. this file should not be uploaded publicly.
-
-## notes
-
-this app currently supports stocks only, not crypto.
-
-historical data uses alpaca's iex feed.
-
-live market data comes from the streaming file.
+stores alpaca api keys.
