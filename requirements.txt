@@ -1,0 +1,7 @@
+streamlit
+pandas
+matplotlib
+mplfinance
+requests
+python-dotenv
+alpaca-py
