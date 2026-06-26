@@ -6,6 +6,7 @@ import os
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from alpaca.data.live.crypto import CryptoDataStream
 
 load_dotenv()
 
@@ -59,3 +60,23 @@ mpf.plot(
     volume=True,
     title="AAPL 5-Minute OHLCV"
 )
+
+stream = CryptoDataStream(API_KEY, SECRET_KEY)
+
+latest_bid = None
+latest_ask = None
+latest_trade = None
+
+async def quote_handler(quote):
+    global latest_bid, latest_ask
+    latest_bid = quote.bid_price
+    latest_ask = quote.ask_price
+
+    print("QUOTE")
+    print("symbol:", quote.symbol)
+    print("bid:", latest_bid)
+    print("ask:", latest_ask)
+    print()
+
+stream.subscribe_quotes(quote_handler, "BTC/USD")
+stream.run()
