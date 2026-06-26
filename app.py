@@ -1,8 +1,11 @@
 import pandas as pd
+import mplfinance as mpf
 import time
 import requests
 import os
 from dotenv import load_dotenv
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 load_dotenv()
 
@@ -36,4 +39,23 @@ def get_historical_bars(symbol):
 
     return df
 
-print(get_historical_bars("AAPL"))
+df = get_historical_bars("AAPL")
+
+plot_df = df.rename(columns={
+    "t": "Date",
+    "o": "Open",
+    "h": "High",
+    "l": "Low",
+    "c": "Close",
+    "v": "Volume"
+})
+
+plot_df = plot_df[["Date", "Open", "High", "Low", "Close", "Volume"]]
+plot_df = plot_df.set_index("Date")
+
+mpf.plot(
+    plot_df.tail(100),
+    type="candle",
+    volume=True,
+    title="AAPL 5-Minute OHLCV"
+)
